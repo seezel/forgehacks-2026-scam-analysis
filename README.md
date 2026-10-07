@@ -1,0 +1,1 @@
+# forgehacks-2026-scam-analysis
