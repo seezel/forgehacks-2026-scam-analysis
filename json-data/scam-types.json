@@ -1,0 +1,25 @@
+[
+  {
+    "id": "job_task",
+    "name": "Job / task scam",
+    "shortDescription": "An unexpected work or simple-task offer that eventually seeks money or sensitive information.",
+    "recurringStructure": "Unexpected work offer -> easy or repetitive tasks -> apparent earnings or trust-building -> deposit, fee, or sensitive-information request.",
+    "signalWeights": {
+      "unexpected_contact": 2,
+      "claimed_recruiter_or_employer": 2,
+      "career_opportunity_pressure": 2,
+      "reward_or_easy_money": 3,
+      "request_move_to_other_platform": 2,
+      "small_initial_payout": 4,
+      "request_deposit_or_fee": 4,
+      "request_money_or_transfer": 3,
+      "request_credentials": 3
+    },
+    "contradictionPenalties": {},
+    "safeActionIds": [
+      "do_not_send_money",
+      "do_not_share_credentials",
+      "verify_via_official_channel"
+    ]
+  }
+]

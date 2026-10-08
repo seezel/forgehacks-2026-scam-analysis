@@ -1,0 +1,78 @@
+[
+  {
+    "id": "do_not_send_money",
+    "defaultText": "Do not send money, deposits, fees, gift cards, cryptocurrency, or transfers based on this request.",
+    "triggerSignalIds": ["request_money_or_transfer", "request_deposit_or_fee"],
+    "triggerScamTypeIds": []
+  },
+  {
+    "id": "do_not_share_credentials",
+    "defaultText": "Do not share passwords, login details, banking credentials, or other account secrets.",
+    "triggerSignalIds": ["request_credentials"],
+    "triggerScamTypeIds": []
+  },
+  {
+    "id": "do_not_share_otp",
+    "defaultText": "Do not share one-time passwords or security codes.",
+    "triggerSignalIds": ["request_otp_or_security_code"],
+    "triggerScamTypeIds": []
+  },
+  {
+    "id": "do_not_open_or_install_attachment",
+    "defaultText": "Do not open or install the attachment until you verify it through a trusted independent channel.",
+    "triggerSignalIds": [
+      "request_download_or_install",
+      "ordinary_looking_attachment_used_as_lure"
+    ],
+    "triggerScamTypeIds": []
+  },
+  {
+    "id": "do_not_use_provided_link",
+    "defaultText": "Avoid using the link in the suspicious message; navigate to the organization or service independently if you need to verify something.",
+    "triggerSignalIds": [
+      "suspicious_link_present",
+      "login_or_credential_capture_link"
+    ],
+    "triggerScamTypeIds": []
+  },
+  {
+    "id": "verify_via_official_channel",
+    "defaultText": "Verify the claim through an official channel you find independently, not through contact details supplied in the suspicious message.",
+    "triggerSignalIds": [
+      "claimed_authority_or_institution",
+      "claimed_recruiter_or_employer",
+      "claimed_tech_support"
+    ],
+    "triggerScamTypeIds": []
+  },
+  {
+    "id": "contact_person_via_separate_trusted_channel",
+    "defaultText": "If this appears to come from someone you know, contact that person through a separate trusted channel before acting.",
+    "triggerSignalIds": ["claimed_friend_or_known_contact"],
+    "triggerScamTypeIds": ["compromised_friend"]
+  },
+  {
+    "id": "use_official_app_or_site_directly",
+    "defaultText": "Open the service's official app or type its known official website yourself instead of following the provided link.",
+    "triggerSignalIds": ["suspicious_link_present"],
+    "triggerScamTypeIds": []
+  },
+  {
+    "id": "stop_remote_access_session",
+    "defaultText": "Do not grant remote access. If a remote-access session is already active, disconnect it before continuing verification.",
+    "triggerSignalIds": ["request_remote_access"],
+    "triggerScamTypeIds": []
+  },
+  {
+    "id": "report_or_block_on_platform",
+    "defaultText": "If you confirm the account or message is suspicious, use the platform's built-in report or block controls.",
+    "triggerSignalIds": [],
+    "triggerScamTypeIds": []
+  },
+  {
+    "id": "contact_financial_institution_via_official_channel",
+    "defaultText": "If money or banking information may already be involved, contact the financial institution using an official channel you find independently.",
+    "triggerSignalIds": ["request_money_or_transfer", "request_credentials"],
+    "triggerScamTypeIds": ["institution_impersonation"]
+  }
+]

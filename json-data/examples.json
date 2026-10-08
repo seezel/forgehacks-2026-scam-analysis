@@ -1,0 +1,28 @@
+[
+  {
+    "id": "ftc-task-scam-2025",
+    "scamTypeId": "job_task",
+    "title": "Unexpected online task offer followed by deposit request",
+    "shortParaphrase": "An unexpected WhatsApp, Telegram, text, or social message offers simple paid online tasks. Apparent earnings may be shown or a small payment may be sent, then the victim is told to deposit personal funds to continue or withdraw supposed earnings.",
+    "platform": "messaging / social",
+    "claimedIdentity": "recruiter or work opportunity",
+    "requestedActions": [
+      "perform simple online tasks",
+      "deposit personal funds"
+    ],
+    "signalIds": [
+      "unexpected_contact",
+      "reward_or_easy_money",
+      "small_initial_payout",
+      "request_deposit_or_fee",
+      "request_money_or_transfer"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "How to spot and avoid task scams",
+      "url": "https://consumer.ftc.gov/consumer-alerts/2025/08/how-spot-avoid-task-scams",
+      "publishedDate": "2025-08-14"
+    },
+    "notes": "Reference example for the first vertical slice."
+  }
+]
