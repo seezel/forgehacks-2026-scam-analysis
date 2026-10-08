@@ -169,9 +169,22 @@ describe("POST /api/analyze", () => {
     });
   });
 
+  it("returns a specific technical error when the provider rate limits analysis", async () => {
+    extractSignalsMock.mockRejectedValue(new ProviderRateLimitError());
+
+    const response = await POST(request({ text: "Please review this." }));
+
+    expect(response.status).toBe(503);
+    await expect(response.json()).resolves.toEqual({
+      error: {
+        code: "provider_rate_limited",
+        message: "Analysis rate limit reached. Please wait a moment and try again.",
+      },
+    });
+  });
+
   it.each([
     ["timeout", new ProviderTimeoutError()],
-    ["rate limit", new ProviderRateLimitError()],
     ["transient provider failure", new ProviderResponseError("Unavailable", true)],
   ])("maps %s to HTTP 503", async (_name, error) => {
     extractSignalsMock.mockRejectedValue(error);

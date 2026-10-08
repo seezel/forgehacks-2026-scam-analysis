@@ -82,7 +82,15 @@ export async function POST(request: Request): Promise<Response> {
 
     return Response.json({ result });
   } catch (error) {
-    if (error instanceof ProviderTimeoutError || error instanceof ProviderRateLimitError) {
+    if (error instanceof ProviderRateLimitError) {
+      return errorResponse(
+        503,
+        "provider_rate_limited",
+        "Analysis rate limit reached. Please wait a moment and try again.",
+      );
+    }
+
+    if (error instanceof ProviderTimeoutError) {
       return errorResponse(
         503,
         "provider_unavailable",

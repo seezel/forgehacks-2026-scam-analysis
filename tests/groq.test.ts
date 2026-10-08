@@ -65,6 +65,8 @@ describe("extractSignals", () => {
     const request = create.mock.calls[0][0];
     expect(request.model).toBe("qwen/qwen3.8-27b");
     expect(request.reasoning_effort).toBe("none");
+    expect(request.temperature).toBe(0);
+    expect(request.seed).toBe(42);
     expect(request.response_format).toMatchObject({
       type: "json_schema",
       json_schema: {
@@ -77,6 +79,38 @@ describe("extractSignals", () => {
     expect(request.messages[0].content).toContain(
       "Do not classify the final scam type",
     );
+  });
+
+  it("requires exact source evidence and complete controlled-signal evaluation", async () => {
+    const create = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(validExtraction) } }],
+    });
+
+    await extractSignals(input, { client: fakeClient(create) });
+
+    const instruction = create.mock.calls[0][0].messages[0].content;
+    expect(instruction).toContain(
+      'For source "text", evidence must be an exact verbatim substring from the submitted Text field, and source must be "text".',
+    );
+    expect(instruction).toContain(
+      'For source "context", evidence must be an exact verbatim substring from the submitted Context field, and source must be "context".',
+    );
+    expect(instruction).toContain(
+      'For source "url", evidence must be an exact substring from the submitted URL field, and source must be "url".',
+    );
+    expect(instruction).toContain(
+      'For source "image", evidence may be a short transcription or description of visible image content.',
+    );
+    expect(instruction).toContain(
+      "Evaluate every controlled signal ID independently.",
+    );
+    expect(instruction).toContain(
+      "Include every signal that is directly supported by the submitted content.",
+    );
+    expect(instruction).toContain(
+      "Do not omit a supported signal merely because a similar signal is also present.",
+    );
+    expect(instruction).toContain("Do not infer unsupported signals.");
   });
 
   it("uses the configured model without substituting another", async () => {
@@ -106,7 +140,7 @@ describe("extractSignals", () => {
       "schema-invalid JSON",
       JSON.stringify({ ...validExtraction, presentSignals: [{ id: "invented" }] }),
     ],
-  ])("rejects %s as a provider response error", async (_name, content) => {
+  ])("rejects %s without retrying", async (_name, content) => {
     const create = vi.fn().mockResolvedValue({
       choices: [{ message: { content } }],
     });
@@ -117,20 +151,15 @@ describe("extractSignals", () => {
     expect(create).toHaveBeenCalledOnce();
   });
 
-  it("retries exactly once after HTTP 429", async () => {
-    const create = vi
-      .fn()
-      .mockRejectedValueOnce({ status: 429 })
-      .mockResolvedValueOnce({
-        choices: [{ message: { content: JSON.stringify(validExtraction) } }],
-      });
+  it("maps HTTP 429 immediately to a rate-limit error without retrying", async () => {
+    const create = vi.fn().mockRejectedValue({ status: 429 });
     const sleep = vi.fn().mockResolvedValue(undefined);
 
     await expect(
       extractSignals(input, { client: fakeClient(create), sleep }),
-    ).resolves.toEqual(validExtraction);
-    expect(create).toHaveBeenCalledTimes(2);
-    expect(sleep).toHaveBeenCalledWith(500);
+    ).rejects.toBeInstanceOf(ProviderRateLimitError);
+    expect(create).toHaveBeenCalledOnce();
+    expect(sleep).not.toHaveBeenCalled();
   });
 
   it("retries exactly once after a provider 5xx", async () => {
@@ -141,12 +170,16 @@ describe("extractSignals", () => {
         choices: [{ message: { content: JSON.stringify(validExtraction) } }],
       });
 
+    const sleep = vi.fn().mockResolvedValue(undefined);
+
     await extractSignals(input, {
       client: fakeClient(create),
-      sleep: vi.fn().mockResolvedValue(undefined),
+      sleep,
     });
 
     expect(create).toHaveBeenCalledTimes(2);
+    expect(sleep).toHaveBeenCalledOnce();
+    expect(sleep).toHaveBeenCalledWith(500);
   });
 
   it("does not retry invalid structured output", async () => {
@@ -161,18 +194,6 @@ describe("extractSignals", () => {
       }),
     ).rejects.toBeInstanceOf(ProviderResponseError);
     expect(create).toHaveBeenCalledOnce();
-  });
-
-  it("maps a final 429 to a typed rate-limit error", async () => {
-    const create = vi.fn().mockRejectedValue({ status: 429 });
-
-    await expect(
-      extractSignals(input, {
-        client: fakeClient(create),
-        sleep: vi.fn().mockResolvedValue(undefined),
-      }),
-    ).rejects.toBeInstanceOf(ProviderRateLimitError);
-    expect(create).toHaveBeenCalledTimes(2);
   });
 
   it("maps an SDK connection failure to transient unavailability without retrying", async () => {

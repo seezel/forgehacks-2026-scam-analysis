@@ -125,6 +125,8 @@ async function buildRequest(input: AnalyzeInput): Promise<Record<string, unknown
   return {
     model: process.env.GROQ_MODEL ?? DEFAULT_MODEL,
     reasoning_effort: "none",
+    temperature: 0,
+    seed: 42,
     messages: [
       { role: "system", content: extractionInstruction() },
       { role: "user", content: userContent },
@@ -146,7 +148,14 @@ function extractionInstruction(): string {
     "Do not classify the final scam type.",
     "Do not decide Strong, Possible, or Insufficient evidence status.",
     `Use only these controlled signal IDs: ${SIGNAL_IDS.join(", ")}.`,
-    "Every signal must include exact or near-exact supporting evidence from the submitted text, URL, context, or image.",
+    "Evaluate every controlled signal ID independently.",
+    "Include every signal that is directly supported by the submitted content.",
+    "Do not omit a supported signal merely because a similar signal is also present.",
+    "Do not infer unsupported signals.",
+    'For source "text", evidence must be an exact verbatim substring from the submitted Text field, and source must be "text".',
+    'For source "context", evidence must be an exact verbatim substring from the submitted Context field, and source must be "context".',
+    'For source "url", evidence must be an exact substring from the submitted URL field, and source must be "url".',
+    'For source "image", evidence may be a short transcription or description of visible image content.',
     "If something cannot be determined, put it in uncertainties rather than guessing.",
     "Do not invent names, links, identities, actions, payments, credentials, or warning signs.",
   ].join("\n");
@@ -162,9 +171,10 @@ async function createCompletionWithRetry(
       return await client.chat.completions.create(request);
     } catch (error) {
       const status = providerStatus(error);
-      const transient = status === 429 || (status !== undefined && status >= 500);
+      const retryableServerFailure =
+        status !== undefined && status >= 500 && status < 600;
 
-      if (attempt === 0 && transient) {
+      if (attempt === 0 && retryableServerFailure) {
         await sleep(RETRY_DELAY_MS);
         continue;
       }
@@ -192,7 +202,7 @@ function mapProviderError(error: unknown, status: number | undefined): Error {
   if (status === 429) {
     return new ProviderRateLimitError();
   }
-  if (status !== undefined && status >= 500) {
+  if (status !== undefined && status >= 500 && status < 600) {
     return new ProviderResponseError(
       "The analysis provider is temporarily unavailable.",
       true,
