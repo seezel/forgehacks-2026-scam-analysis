@@ -84,75 +84,103 @@ export function AnalysisForm() {
         aria-label="Scam analysis"
         onSubmit={handleSubmit}
       >
-        <label htmlFor="text">Suspicious text</label>
-        <textarea
-          id="text"
-          name="text"
-          rows={9}
-          maxLength={10_000}
-          placeholder="Paste the message or offer here"
-        />
+        <div className="form-intro">
+          <p className="section-label">Scanner</p>
+          <h2>Submit suspicious content</h2>
+          <p>
+            Add any combination of message text, an image, or a URL. Platform
+            and context help explain the result.
+          </p>
+        </div>
 
-        <label htmlFor="image">Screenshot or image</label>
-        <input
-          id="image"
-          name="image"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          aria-describedby="image-help"
-          onChange={(event) => {
-            setSelectedImage(event.target.files?.[0] ?? null);
-            setError("");
-          }}
-        />
-        <p id="image-help" className="privacy-note">
-          JPEG, PNG, or WebP. Maximum 5 MB.
-        </p>
-        {selectedImage ? (
-          <p className="privacy-note">{selectedImage.name}</p>
+        <div className="field-group field-span">
+          <label htmlFor="text">Suspicious text</label>
+          <textarea
+            id="text"
+            name="text"
+            rows={9}
+            maxLength={10_000}
+            placeholder="Paste the message or offer here"
+          />
+        </div>
+
+        <div className="field-group field-span">
+          <label htmlFor="image">Screenshot or image</label>
+          <input
+            id="image"
+            name="image"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            aria-describedby="image-help"
+            onChange={(event) => {
+              setSelectedImage(event.target.files?.[0] ?? null);
+              setError("");
+            }}
+          />
+          <p id="image-help" className="field-help">
+            JPEG, PNG, or WebP. Maximum 5 MB.
+          </p>
+          {selectedImage ? (
+            <p className="selected-file" aria-live="polite">
+              <span className="selected-file-label">Selected:</span>{" "}
+              <span>{selectedImage.name}</span>
+            </p>
+          ) : null}
+        </div>
+
+        <div className="field-group">
+          <label htmlFor="url">URL</label>
+          <input
+            id="url"
+            name="url"
+            type="url"
+            maxLength={2_048}
+            placeholder="https://example.com"
+          />
+        </div>
+
+        <div className="field-group">
+          <label htmlFor="platform">Platform</label>
+          <select id="platform" name="platform" defaultValue="">
+            <option value="">Select a platform</option>
+            <option>Discord</option>
+            <option>WhatsApp</option>
+            <option>Telegram</option>
+            <option>Email</option>
+            <option>Marketplace</option>
+            <option>Website</option>
+            <option>SMS</option>
+            <option>Other / unknown</option>
+          </select>
+        </div>
+
+        <div className="field-group field-span">
+          <label htmlFor="context">Context</label>
+          <textarea
+            id="context"
+            name="context"
+            rows={3}
+            maxLength={1_000}
+            placeholder="How did you receive it? What happened before this?"
+          />
+        </div>
+
+        <div className="form-footer field-span">
+          <p className="privacy-note">
+            Submitted content is sent to Groq for analysis and this app does not
+            intentionally store submissions. Do not submit passwords, one-time
+            codes, private keys, or highly sensitive financial credentials.
+          </p>
+
+          <button type="submit" disabled={submitting}>
+            {submitting ? "Analyzing…" : "Analyze"}
+          </button>
+        </div>
+        {error ? (
+          <p className="form-error field-span" role="alert">
+            {error}
+          </p>
         ) : null}
-
-        <label htmlFor="url">URL</label>
-        <input
-          id="url"
-          name="url"
-          type="url"
-          maxLength={2_048}
-          placeholder="https://example.com"
-        />
-
-        <label htmlFor="platform">Platform</label>
-        <select id="platform" name="platform" defaultValue="">
-          <option value="">Select a platform</option>
-          <option>Discord</option>
-          <option>WhatsApp</option>
-          <option>Telegram</option>
-          <option>Email</option>
-          <option>Marketplace</option>
-          <option>Website</option>
-          <option>SMS</option>
-          <option>Other / unknown</option>
-        </select>
-
-        <label htmlFor="context">Context</label>
-        <textarea
-          id="context"
-          name="context"
-          rows={3}
-          maxLength={1_000}
-          placeholder="How did you receive it? What happened before this?"
-        />
-
-        <p className="privacy-note">
-          Submitted content is sent to Groq for analysis and this app does not
-          intentionally store submissions. Do not submit passwords, one-time
-          codes, private keys, or highly sensitive financial credentials.
-        </p>
-
-        <button type="submit" disabled={submitting}>
-          {submitting ? "Analyzing…" : "Analyze"}
-        </button>
-        {error ? <p role="alert">{error}</p> : null}
       </form>
 
       {result ? <AnalysisResult result={result} /> : null}

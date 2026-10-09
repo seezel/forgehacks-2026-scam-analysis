@@ -26,16 +26,19 @@ export function AnalysisResult({ result }: { result: AnalysisResultData }) {
 
   return (
     <section className="result" aria-labelledby="result-heading">
-      <h2 id="result-heading">Result</h2>
-      <p className={`status status-${result.status}`}>{status.label}</p>
-      <p>{status.detail}</p>
+      <div className="result-summary">
+        <p className="section-label">Analysis complete</p>
+        <h2 id="result-heading">Result</h2>
+        <p className={`status status-${result.status}`}>{status.label}</p>
+        <p className="status-detail">{status.detail}</p>
+      </div>
 
-      <section>
+      <section className="result-actions">
         <h2>What to do now</h2>
         <SafeActions actions={result.immediateActions} />
       </section>
 
-      <section>
+      <section className="result-evidence">
         <h2>Why</h2>
         <EvidenceList evidence={result.strongestEvidence} />
       </section>
@@ -74,11 +77,11 @@ export function AnalysisResult({ result }: { result: AnalysisResultData }) {
 
         {result.relatedExamples.map((example) => (
           <article className="related-example" key={example.exampleId}>
-            <p>
+            <p className="example-title">
               <strong>{example.title}</strong>
             </p>
             <p>{example.shortParaphrase}</p>
-            <p>
+            <p className="source-line">
               Source:{" "}
               <a
                 href={example.sourceUrl}
