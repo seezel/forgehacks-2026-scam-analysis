@@ -7,15 +7,31 @@ import type { AnalysisResult as AnalysisResultData } from "@/types/analysis";
 type ErrorPayload = { error?: { message?: string } };
 type SuccessPayload = { result: AnalysisResultData };
 
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+const IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+
 export function AnalysisForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<AnalysisResultData | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const submissionPending = useRef(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (submissionPending.current) {
+      return;
+    }
+
+    if (selectedImage && selectedImage.size > MAX_IMAGE_BYTES) {
+      setError("Image must be 5 MB or smaller.");
+      setResult(null);
+      return;
+    }
+
+    if (selectedImage && !IMAGE_TYPES.has(selectedImage.type)) {
+      setError("Image must be a JPEG, PNG, or WebP file.");
+      setResult(null);
       return;
     }
 
@@ -25,9 +41,14 @@ export function AnalysisForm() {
     setResult(null);
 
     try {
+      const formData = new FormData(event.currentTarget);
+      if (selectedImage) {
+        formData.set("image", selectedImage);
+      }
+
       const response = await fetch("/api/analyze", {
         method: "POST",
-        body: new FormData(event.currentTarget),
+        body: formData,
       });
       const body = (await response.json()) as SuccessPayload | ErrorPayload;
 
@@ -71,6 +92,25 @@ export function AnalysisForm() {
           maxLength={10_000}
           placeholder="Paste the message or offer here"
         />
+
+        <label htmlFor="image">Screenshot or image</label>
+        <input
+          id="image"
+          name="image"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          aria-describedby="image-help"
+          onChange={(event) => {
+            setSelectedImage(event.target.files?.[0] ?? null);
+            setError("");
+          }}
+        />
+        <p id="image-help" className="privacy-note">
+          JPEG, PNG, or WebP. Maximum 5 MB.
+        </p>
+        {selectedImage ? (
+          <p className="privacy-note">{selectedImage.name}</p>
+        ) : null}
 
         <label htmlFor="url">URL</label>
         <input
