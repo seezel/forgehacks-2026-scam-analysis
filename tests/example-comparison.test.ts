@@ -53,26 +53,39 @@ function example(
   };
 }
 
+function loadedProfile(id: string) {
+  const profile = loadScamTypes().find((item) => item.id === id);
+  expect(profile).toBeDefined();
+  return profile!;
+}
+
+function loadedExample(id: string) {
+  const documentedExample = loadExamples().find((item) => item.id === id);
+  expect(documentedExample).toBeDefined();
+  return documentedExample!;
+}
+
 describe("rankRelatedExamples", () => {
   it("calculates weighted overlap for the approved FTC example", () => {
-    const profile = loadScamTypes()[0];
+    const profile = loadedProfile("job_task");
     const related = rankRelatedExamples(
       profile,
       loadExamples(),
       extraction(["unexpected_contact", "request_deposit_or_fee"]),
     );
 
-    expect(related).toHaveLength(1);
-    expect(related[0]).toMatchObject({
+    expect(related).toContainEqual(
+      expect.objectContaining({
       exampleId: "ftc-task-scam-2025",
       sharedSignalIds: ["unexpected_contact", "request_deposit_or_fee"],
       overlapScore: 0.375,
       sourceLabel: "U.S. Federal Trade Commission",
-    });
+      }),
+    );
   });
 
   it("considers only examples from the selected scam type", () => {
-    const profile = loadScamTypes()[0];
+    const profile = loadedProfile("job_task");
     const wrongType = example(
       "wrong-type",
       "institution_impersonation",
@@ -89,7 +102,7 @@ describe("rankRelatedExamples", () => {
   });
 
   it("sorts by weighted overlap and returns at most three examples", () => {
-    const profile = loadScamTypes()[0];
+    const profile = loadedProfile("job_task");
     const examples = [
       example("low", "job_task", ["unexpected_contact"]),
       example("highest", "job_task", ["request_deposit_or_fee"]),
@@ -112,10 +125,10 @@ describe("rankRelatedExamples", () => {
   });
 
   it("describes only known claimed-identity and requested-action differences", () => {
-    const profile = loadScamTypes()[0];
+    const profile = loadedProfile("job_task");
     const related = rankRelatedExamples(
       profile,
-      loadExamples(),
+      [loadedExample("ftc-task-scam-2025")],
       extraction(["request_deposit_or_fee"], {
         claimedIdentity: "game developer",
         requestedActions: ["install a test build"],
@@ -129,7 +142,7 @@ describe("rankRelatedExamples", () => {
   });
 
   it("does not invent differences for unknown submitted fields", () => {
-    const profile = loadScamTypes()[0];
+    const profile = loadedProfile("job_task");
     const related = rankRelatedExamples(
       profile,
       loadExamples(),
@@ -140,10 +153,10 @@ describe("rankRelatedExamples", () => {
   });
 
   it("does not let duplicate submitted actions hide a known difference", () => {
-    const profile = loadScamTypes()[0];
+    const profile = loadedProfile("job_task");
     const related = rankRelatedExamples(
       profile,
-      loadExamples(),
+      [loadedExample("ftc-task-scam-2025")],
       extraction(["request_deposit_or_fee"], {
         requestedActions: [
           "perform simple online tasks",
@@ -155,5 +168,41 @@ describe("rankRelatedExamples", () => {
     expect(related[0].differences).toContain(
       'Requested actions differ: documented example includes "perform simple online tasks; deposit personal funds"; submitted content includes "perform simple online tasks; perform simple online tasks".',
     );
+  });
+
+  it("compares expanded-type examples while retaining their source metadata", () => {
+    const profile = loadedProfile("marketplace");
+    const marketplaceExamples = loadExamples().filter(
+      (item) => item.scamTypeId === "marketplace",
+    );
+    const related = rankRelatedExamples(
+      profile,
+      marketplaceExamples,
+      extraction(
+        [
+          "claimed_seller_or_buyer",
+          "off_platform_payment_request",
+          "request_money_or_transfer",
+        ],
+        {
+          claimedIdentity: "buyer",
+          requestedActions: ["send payment outside the marketplace"],
+        },
+      ),
+    );
+
+    expect(marketplaceExamples.length).toBeGreaterThanOrEqual(2);
+    expect(related.length).toBeGreaterThan(0);
+    for (const result of related) {
+      const sourceExample = marketplaceExamples.find(
+        (item) => item.id === result.exampleId,
+      );
+      expect(sourceExample).toBeDefined();
+      expect(result.sourceUrl).toBe(sourceExample?.source.url);
+      expect(result.sourceLabel).toBe(
+        sourceExample?.source.organizationOrPublisher,
+      );
+      expect(Array.isArray(result.differences)).toBe(true);
+    }
   });
 });

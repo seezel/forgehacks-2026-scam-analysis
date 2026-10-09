@@ -4,7 +4,7 @@ import { loadScamTypes } from "@/lib/scam-data";
 import type { SignalObservation } from "@/types/analysis";
 import type { ScamTypeProfile } from "@/types/scam-data";
 
-function signals(ids: string[]): SignalObservation[] {
+function signals(ids: readonly string[]): SignalObservation[] {
   return ids.map((id) => ({
     id,
     evidence: `Evidence for ${id}`,
@@ -108,6 +108,172 @@ describe("rankScamTypes", () => {
     });
 
     expect(ranking[0].normalizedScore).toBe(0);
+  });
+});
+
+describe("approved corpus rankings", () => {
+  it.each([
+    [
+      "compromised_friend",
+      [
+        "claimed_friend_or_known_contact",
+        "urgency_pressure",
+        "fear_or_threat",
+        "request_money_or_transfer",
+        "unexpected_contact",
+      ],
+    ],
+    [
+      "job_task",
+      [
+        "unexpected_contact",
+        "claimed_recruiter_or_employer",
+        "reward_or_easy_money",
+        "small_initial_payout",
+        "request_deposit_or_fee",
+        "request_money_or_transfer",
+      ],
+    ],
+    [
+      "relationship_investment",
+      [
+        "relationship_or_romance_trust",
+        "investment_or_profit_claim",
+        "reward_or_easy_money",
+        "request_money_or_transfer",
+        "request_move_to_other_platform",
+      ],
+    ],
+    [
+      "institution_impersonation",
+      [
+        "claimed_authority_or_institution",
+        "authority_pressure",
+        "fear_or_threat",
+        "request_credentials",
+        "login_or_credential_capture_link",
+      ],
+    ],
+    [
+      "marketplace",
+      [
+        "claimed_seller_or_buyer",
+        "off_platform_payment_request",
+        "request_money_or_transfer",
+        "urgency_pressure",
+        "suspicious_link_present",
+      ],
+    ],
+    [
+      "tech_support",
+      [
+        "claimed_tech_support",
+        "device_infection_claim",
+        "fear_or_threat",
+        "request_remote_access",
+        "urgency_pressure",
+      ],
+    ],
+    [
+      "professional_targeted",
+      [
+        "professional_workflow_or_invoice_request",
+        "request_money_or_transfer",
+        "authority_pressure",
+        "request_credentials",
+      ],
+    ],
+    [
+      "malicious_attachment",
+      [
+        "ordinary_looking_attachment_used_as_lure",
+        "request_download_or_install",
+        "professional_workflow_or_invoice_request",
+        "urgency_pressure",
+      ],
+    ],
+  ] as const)("ranks %s first for representative evidence", (expectedTypeId, signalIds) => {
+    const ranking = rankScamTypes({
+      profiles: loadScamTypes(),
+      presentSignals: signals(signalIds),
+      contradictingSignals: [],
+    });
+
+    expect(ranking[0].scamTypeId).toBe(expectedTypeId);
+  });
+
+  it("favors job_task for classic task-scam evidence", () => {
+    const ranking = rankScamTypes({
+      profiles: loadScamTypes(),
+      presentSignals: signals([
+        "reward_or_easy_money",
+        "small_initial_payout",
+        "request_deposit_or_fee",
+        "claimed_recruiter_or_employer",
+        "unexpected_contact",
+      ]),
+      contradictingSignals: [],
+    });
+
+    expect(ranking[0].scamTypeId).toBe("job_task");
+    expect(ranking.findIndex((item) => item.scamTypeId === "job_task")).toBeLessThan(
+      ranking.findIndex((item) => item.scamTypeId === "professional_targeted"),
+    );
+  });
+
+  it("favors professional_targeted for invoice and payment workflow evidence", () => {
+    const ranking = rankScamTypes({
+      profiles: loadScamTypes(),
+      presentSignals: signals([
+        "professional_workflow_or_invoice_request",
+        "request_money_or_transfer",
+        "authority_pressure",
+        "request_credentials",
+      ]),
+      contradictingSignals: [],
+    });
+
+    expect(ranking[0].scamTypeId).toBe("professional_targeted");
+    expect(ranking.findIndex((item) => item.scamTypeId === "professional_targeted")).toBeLessThan(
+      ranking.findIndex((item) => item.scamTypeId === "job_task"),
+    );
+  });
+
+  it("favors tech_support over institution_impersonation for remote-access evidence", () => {
+    const ranking = rankScamTypes({
+      profiles: loadScamTypes(),
+      presentSignals: signals([
+        "claimed_tech_support",
+        "device_infection_claim",
+        "request_remote_access",
+        "fear_or_threat",
+      ]),
+      contradictingSignals: [],
+    });
+
+    expect(ranking[0].scamTypeId).toBe("tech_support");
+    expect(ranking.findIndex((item) => item.scamTypeId === "tech_support")).toBeLessThan(
+      ranking.findIndex(
+        (item) => item.scamTypeId === "institution_impersonation",
+      ),
+    );
+  });
+
+  it("favors malicious_attachment when attachment-specific evidence is strongest", () => {
+    const ranking = rankScamTypes({
+      profiles: loadScamTypes(),
+      presentSignals: signals([
+        "ordinary_looking_attachment_used_as_lure",
+        "request_download_or_install",
+        "professional_workflow_or_invoice_request",
+      ]),
+      contradictingSignals: [],
+    });
+
+    expect(ranking[0].scamTypeId).toBe("malicious_attachment");
+    expect(ranking.findIndex((item) => item.scamTypeId === "malicious_attachment")).toBeLessThan(
+      ranking.findIndex((item) => item.scamTypeId === "professional_targeted"),
+    );
   });
 });
 

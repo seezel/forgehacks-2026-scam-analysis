@@ -6,12 +6,32 @@ import {
   loadScamTypes,
 } from "@/lib/scam-data";
 
-describe("scam data", () => {
-  it("loads only the approved job/task profile with exact weights", () => {
-    const profiles = loadScamTypes();
+const APPROVED_PROFILE_IDS = [
+  "compromised_friend",
+  "job_task",
+  "relationship_investment",
+  "institution_impersonation",
+  "marketplace",
+  "tech_support",
+  "professional_targeted",
+  "malicious_attachment",
+] as const;
 
-    expect(profiles).toHaveLength(1);
-    expect(profiles[0]).toMatchObject({
+describe("scam data", () => {
+  it("loads exactly the eight unique approved scam profiles", () => {
+    const profiles = loadScamTypes();
+    const profileIds = profiles.map((profile) => profile.id);
+
+    expect(profileIds).toEqual(APPROVED_PROFILE_IDS);
+    expect(new Set(profileIds).size).toBe(APPROVED_PROFILE_IDS.length);
+  });
+
+  it("preserves the approved job/task profile behavior", () => {
+    const jobTask = loadScamTypes().find(
+      (profile) => profile.id === "job_task",
+    );
+
+    expect(jobTask).toMatchObject({
       id: "job_task",
       name: "Job / task scam",
       signalWeights: {
@@ -32,27 +52,48 @@ describe("scam data", () => {
         "verify_via_official_channel",
       ],
     });
+  });
+
+  it("keeps every profile weight in range and every profile well-defined", () => {
+    const profiles = loadScamTypes();
+
     expect(
-      Object.values(profiles[0].signalWeights).every(
-        (weight) => Number.isInteger(weight) && weight >= 1 && weight <= 4,
+      profiles.every(
+        (profile) =>
+          Object.keys(profile.signalWeights).length >= 3 &&
+          Object.values(profile.signalWeights).every(
+            (weight) => Number.isInteger(weight) && weight >= 1 && weight <= 4,
+          ),
       ),
     ).toBe(true);
   });
 
-  it("loads the approved FTC example with required provenance", () => {
+  it("loads at least two documented examples for every approved type", () => {
     const examples = loadExamples();
+    const counts = Object.fromEntries(
+      APPROVED_PROFILE_IDS.map((id) => [
+        id,
+        examples.filter((example) => example.scamTypeId === id).length,
+      ]),
+    );
 
-    expect(examples).toHaveLength(1);
-    expect(examples[0]).toMatchObject({
+    expect(examples.length).toBeGreaterThanOrEqual(16);
+    expect(Object.values(counts).every((count) => count >= 2)).toBe(true);
+  });
+
+  it("keeps the existing FTC task-scam example", () => {
+    expect(loadExamples()).toContainEqual(
+      expect.objectContaining({
       id: "ftc-task-scam-2025",
       scamTypeId: "job_task",
       source: {
         organizationOrPublisher: "U.S. Federal Trade Commission",
         title: "How to spot and avoid task scams",
         url: "https://consumer.ftc.gov/consumer-alerts/2025/08/how-spot-avoid-task-scams",
+        publishedDate: "2025-08-14",
       },
-    });
-    expect(examples[0].shortParaphrase.length).toBeGreaterThan(0);
+      }),
+    );
   });
 
   it("loads the approved fixed safety-action library", () => {
@@ -82,6 +123,9 @@ describe("scam data", () => {
     const profileIds = new Set(profiles.map((profile) => profile.id));
     const actionIds = new Set(actions.map((action) => action.id));
 
+    expect(new Set(examples.map((example) => example.id)).size).toBe(
+      examples.length,
+    );
     expect(examples.every((example) => profileIds.has(example.scamTypeId))).toBe(
       true,
     );
@@ -90,6 +134,23 @@ describe("scam data", () => {
         profile.safeActionIds.every((actionId) => actionIds.has(actionId)),
       ),
     ).toBe(true);
+  });
+
+  it("requires complete authoritative source metadata", () => {
+    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+
+    for (const example of loadExamples()) {
+      expect(example.title.trim()).not.toBe("");
+      expect(example.shortParaphrase.trim()).not.toBe("");
+      expect(example.source.organizationOrPublisher.trim()).not.toBe("");
+      expect(example.source.title.trim()).not.toBe("");
+      expect(() => new URL(example.source.url)).not.toThrow();
+      expect(new URL(example.source.url).protocol).toMatch(/^https?:$/);
+      expect(
+        example.source.publishedDate === null ||
+          datePattern.test(example.source.publishedDate),
+      ).toBe(true);
+    }
   });
 
   it("uses only controlled signal identifiers", () => {

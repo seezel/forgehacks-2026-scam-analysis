@@ -1,5 +1,26 @@
 [
   {
+    "id": "compromised_friend",
+    "name": "Compromised-account / friend scam",
+    "shortDescription": "A scammer appears to be someone the target knows, often through a compromised account or fake emergency, and pressures them to send money, codes, or take another sensitive action.",
+    "recurringStructure": "Known-person identity -> urgent, emotional, or account-related claim -> request for money or a security code -> pressure to act before independently verifying.",
+    "signalWeights": {
+      "claimed_friend_or_known_contact": 4,
+      "account_compromise_claim": 3,
+      "urgency_pressure": 3,
+      "fear_or_threat": 2,
+      "request_money_or_transfer": 4,
+      "request_otp_or_security_code": 3,
+      "unexpected_contact": 2
+    },
+    "contradictionPenalties": {},
+    "safeActionIds": [
+      "do_not_send_money",
+      "do_not_share_otp",
+      "contact_person_via_separate_trusted_channel"
+    ]
+  },
+  {
     "id": "job_task",
     "name": "Job / task scam",
     "shortDescription": "An unexpected work or simple-task offer that eventually seeks money or sensitive information.",
@@ -19,6 +40,138 @@
     "safeActionIds": [
       "do_not_send_money",
       "do_not_share_credentials",
+      "verify_via_official_channel"
+    ]
+  },
+  {
+    "id": "relationship_investment",
+    "name": "Relationship / investment scam",
+    "shortDescription": "A scammer builds personal or romantic trust, or promotes an investment opportunity, before pressuring the target to send money or deposit funds.",
+    "recurringStructure": "New relationship or investment contact -> trust or profit claims -> move toward money or investing -> deposit or transfer request -> continued pressure or sunk-cost pressure.",
+    "signalWeights": {
+      "relationship_or_romance_trust": 4,
+      "investment_or_profit_claim": 4,
+      "request_money_or_transfer": 4,
+      "request_move_to_other_platform": 2,
+      "unexpected_contact": 2,
+      "reward_or_easy_money": 3,
+      "sunk_cost_pressure": 3,
+      "request_deposit_or_fee": 3
+    },
+    "contradictionPenalties": {},
+    "safeActionIds": [
+      "do_not_send_money",
+      "report_or_block_on_platform"
+    ]
+  },
+  {
+    "id": "institution_impersonation",
+    "name": "Bank / government / institution impersonation scam",
+    "shortDescription": "A scammer pretends to represent a bank, government agency, or other trusted institution and uses authority, fear, or account claims to obtain money, credentials, or security codes.",
+    "recurringStructure": "Trusted institution identity -> account, legal, security, or payment problem -> authority or urgency pressure -> request for money, credentials, code, or login.",
+    "signalWeights": {
+      "claimed_authority_or_institution": 4,
+      "authority_pressure": 3,
+      "fear_or_threat": 3,
+      "urgency_pressure": 2,
+      "request_money_or_transfer": 4,
+      "request_credentials": 4,
+      "request_otp_or_security_code": 3,
+      "login_or_credential_capture_link": 3
+    },
+    "contradictionPenalties": {},
+    "safeActionIds": [
+      "do_not_send_money",
+      "do_not_share_credentials",
+      "do_not_share_otp",
+      "do_not_use_provided_link",
+      "verify_via_official_channel",
+      "contact_financial_institution_via_official_channel"
+    ]
+  },
+  {
+    "id": "marketplace",
+    "name": "Online shopping / marketplace scam",
+    "shortDescription": "A fake or dishonest buyer or seller abuses an online shopping or marketplace interaction to obtain money, security codes, or off-platform payment.",
+    "recurringStructure": "Buyer or seller interaction -> unusual payment or verification request -> pressure to leave platform protections or use a supplied link -> money or code loss.",
+    "signalWeights": {
+      "claimed_seller_or_buyer": 4,
+      "off_platform_payment_request": 4,
+      "request_money_or_transfer": 3,
+      "request_otp_or_security_code": 4,
+      "urgency_pressure": 2,
+      "suspicious_link_present": 3,
+      "request_move_to_other_platform": 2
+    },
+    "contradictionPenalties": {},
+    "safeActionIds": [
+      "do_not_send_money",
+      "do_not_share_otp",
+      "do_not_use_provided_link",
+      "report_or_block_on_platform"
+    ]
+  },
+  {
+    "id": "tech_support",
+    "name": "Tech support / pop-up scam",
+    "shortDescription": "A scammer claims a device has a security problem and pressures the target to install software, grant remote access, or pay for unnecessary support.",
+    "recurringStructure": "Device or security warning -> claimed technical support -> fear or urgency -> remote-access, software-installation, or payment request.",
+    "signalWeights": {
+      "claimed_tech_support": 4,
+      "device_infection_claim": 4,
+      "fear_or_threat": 3,
+      "urgency_pressure": 2,
+      "request_remote_access": 4,
+      "request_download_or_install": 4,
+      "request_money_or_transfer": 3
+    },
+    "contradictionPenalties": {},
+    "safeActionIds": [
+      "stop_remote_access_session",
+      "do_not_open_or_install_attachment",
+      "do_not_send_money",
+      "verify_via_official_channel"
+    ]
+  },
+  {
+    "id": "professional_targeted",
+    "name": "Professional-targeted scam",
+    "shortDescription": "A scam abuses a professional workflow such as recruiting, developer collaboration, invoicing, or business payments to obtain money, credentials, or code execution.",
+    "recurringStructure": "Professional identity or workflow -> apparently legitimate work, invoice, or collaboration request -> sensitive professional action -> payment, credentials, or software execution.",
+    "signalWeights": {
+      "claimed_recruiter_or_employer": 3,
+      "professional_workflow_or_invoice_request": 4,
+      "request_money_or_transfer": 4,
+      "request_credentials": 3,
+      "authority_pressure": 3,
+      "request_download_or_install": 3
+    },
+    "contradictionPenalties": {},
+    "safeActionIds": [
+      "do_not_send_money",
+      "do_not_share_credentials",
+      "do_not_open_or_install_attachment",
+      "verify_via_official_channel"
+    ]
+  },
+  {
+    "id": "malicious_attachment",
+    "name": "Malicious document / attachment scam",
+    "shortDescription": "An ordinary-looking document or attachment is used as the lure for malware, credential theft, or another harmful action.",
+    "recurringStructure": "Ordinary-looking file or document -> reason to open, download, or execute it -> urgency or trusted-workflow framing -> malware, credential, or account risk.",
+    "signalWeights": {
+      "ordinary_looking_attachment_used_as_lure": 4,
+      "request_download_or_install": 4,
+      "professional_workflow_or_invoice_request": 3,
+      "claimed_authority_or_institution": 2,
+      "claimed_recruiter_or_employer": 2,
+      "urgency_pressure": 2,
+      "fear_or_threat": 2
+    },
+    "contradictionPenalties": {},
+    "safeActionIds": [
+      "do_not_open_or_install_attachment",
+      "do_not_use_provided_link",
       "verify_via_official_channel"
     ]
   }

@@ -1,5 +1,56 @@
 [
   {
+    "id": "ftc-ai-family-emergency-2023",
+    "scamTypeId": "compromised_friend",
+    "title": "Cloned family voice used in an emergency money request",
+    "shortParaphrase": "A caller uses a cloned version of a family member's voice to claim the person is in serious trouble and needs money immediately. The FTC advises independently calling the relative or another trusted person at a known number before acting.",
+    "platform": "phone",
+    "claimedIdentity": "family member in an emergency",
+    "requestedActions": [
+      "send money for the claimed emergency"
+    ],
+    "signalIds": [
+      "claimed_friend_or_known_contact",
+      "urgency_pressure",
+      "fear_or_threat",
+      "request_money_or_transfer",
+      "unexpected_contact"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "Scammers use AI to enhance their family emergency schemes",
+      "url": "https://consumer.ftc.gov/consumer-alerts/2023/03/scammers-use-ai-enhance-their-family-emergency-schemes",
+      "publishedDate": "2023-03-20"
+    },
+    "notes": "FTC warning about voice-cloning in family-emergency scams."
+  },
+  {
+    "id": "ftc-fake-emergency",
+    "scamTypeId": "compromised_friend",
+    "title": "Fake friend or family emergency demands immediate payment",
+    "shortParaphrase": "A caller pretends to be a family member or close friend, or someone acting for them, and claims an urgent crisis. The caller uses secrecy and emotional pressure to demand a hard-to-recover payment before the story can be checked.",
+    "platform": "phone / messaging",
+    "claimedIdentity": "family member, close friend, or helper",
+    "requestedActions": [
+      "send money immediately",
+      "keep the claimed emergency secret"
+    ],
+    "signalIds": [
+      "claimed_friend_or_known_contact",
+      "urgency_pressure",
+      "fear_or_threat",
+      "request_money_or_transfer",
+      "unexpected_contact"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "Scammers Use Fake Emergencies To Steal Your Money",
+      "url": "https://consumer.ftc.gov/articles/scammers-use-fake-emergencies-steal-your-money",
+      "publishedDate": null
+    },
+    "notes": "The evergreen FTC article displays a month and year, so no precise day is stored."
+  },
+  {
     "id": "ftc-task-scam-2025",
     "scamTypeId": "job_task",
     "title": "Unexpected online task offer followed by deposit request",
@@ -23,6 +74,330 @@
       "url": "https://consumer.ftc.gov/consumer-alerts/2025/08/how-spot-avoid-task-scams",
       "publishedDate": "2025-08-14"
     },
-    "notes": "Reference example for the first vertical slice."
+    "notes": "Reference example retained from the first vertical slice."
+  },
+  {
+    "id": "fbi-work-from-home-2024",
+    "scamTypeId": "job_task",
+    "title": "Fake work-from-home tasks require cryptocurrency deposits",
+    "shortParaphrase": "A fake work-from-home offer promises payment for simple optimization-style tasks and displays supposed earnings on a fraudulent interface. The target is told to make cryptocurrency payments to unlock more work or earnings.",
+    "platform": "messaging / fraudulent work platform",
+    "claimedIdentity": "work-from-home employer",
+    "requestedActions": [
+      "complete simple online tasks",
+      "send cryptocurrency to unlock work or earnings"
+    ],
+    "signalIds": [
+      "unexpected_contact",
+      "claimed_recruiter_or_employer",
+      "reward_or_easy_money",
+      "request_deposit_or_fee",
+      "request_money_or_transfer"
+    ],
+    "source": {
+      "organizationOrPublisher": "Federal Bureau of Investigation, Internet Crime Complaint Center",
+      "title": "Scammers Defraud Individuals via Work-From-Home Scams",
+      "url": "https://www.ic3.gov/PSA/2024/PSA240604",
+      "publishedDate": "2024-06-04"
+    },
+    "notes": "FBI IC3 public service announcement about fake work-from-home task schemes."
+  },
+  {
+    "id": "ftc-looking-for-love-2025",
+    "scamTypeId": "relationship_investment",
+    "title": "Online love interest moves the conversation and asks for money",
+    "shortParaphrase": "A new contact on a dating app or social platform builds a frequent personal relationship, asks to continue talking away from the original platform, cannot meet in person, and eventually asks for money or promotes an investment.",
+    "platform": "dating app / social media / messaging",
+    "claimedIdentity": "online romantic interest",
+    "requestedActions": [
+      "move the conversation off the platform",
+      "send money or invest"
+    ],
+    "signalIds": [
+      "relationship_or_romance_trust",
+      "request_move_to_other_platform",
+      "request_money_or_transfer",
+      "investment_or_profit_claim",
+      "unexpected_contact"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "Looking for love? Watch out for scammers",
+      "url": "https://consumer.ftc.gov/consumer-alerts/2025/02/looking-love-watch-out-scammers",
+      "publishedDate": "2025-02-14"
+    },
+    "notes": "FTC warning about romance scams that progress to money or investment requests."
+  },
+  {
+    "id": "ftc-online-love-investment-2024",
+    "scamTypeId": "relationship_investment",
+    "title": "Online relationship turns into a cryptocurrency investment pitch",
+    "shortParaphrase": "A stranger contacts someone on social media, develops an emotional connection, and then offers to teach them to invest in cryptocurrency. The scam promises large profits with little or no risk and directs the target to send money quickly.",
+    "platform": "social media / messaging",
+    "claimedIdentity": "online romantic interest and investment guide",
+    "requestedActions": [
+      "invest in cryptocurrency",
+      "send money quickly"
+    ],
+    "signalIds": [
+      "relationship_or_romance_trust",
+      "investment_or_profit_claim",
+      "reward_or_easy_money",
+      "request_money_or_transfer",
+      "unexpected_contact"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "What to do if your online love interest offers to teach you how to invest your money",
+      "url": "https://consumer.ftc.gov/consumer-alerts/2024/06/what-do-if-your-online-love-interest-offers-teach-you-how-invest-your-money",
+      "publishedDate": "2024-06-10"
+    },
+    "notes": "FTC warning about romance-based cryptocurrency investment fraud."
+  },
+  {
+    "id": "ftc-government-impersonation",
+    "scamTypeId": "institution_impersonation",
+    "title": "Government impersonator threatens consequences and demands payment",
+    "shortParaphrase": "A caller or message pretends to come from a government agency and claims payment or personal information is urgently required to prevent arrest, loss of benefits, or another serious consequence.",
+    "platform": "phone / email / text / social media",
+    "claimedIdentity": "government agency representative",
+    "requestedActions": [
+      "send payment using a hard-to-recover method",
+      "provide personal or financial information"
+    ],
+    "signalIds": [
+      "claimed_authority_or_institution",
+      "authority_pressure",
+      "fear_or_threat",
+      "urgency_pressure",
+      "request_money_or_transfer",
+      "request_credentials"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "How To Avoid a Government Impersonation Scam",
+      "url": "https://consumer.ftc.gov/articles/how-avoid-government-impersonation-scam",
+      "publishedDate": null
+    },
+    "notes": "The evergreen FTC article does not expose a reliably verified full publication date."
+  },
+  {
+    "id": "ftc-transfer-money-impostor-2024",
+    "scamTypeId": "institution_impersonation",
+    "title": "Agency impersonator orders funds moved to a secure account",
+    "shortParaphrase": "A scammer impersonates the FTC, another agency, or a familiar organization, escalates an ordinary account problem into a claim of criminal activity, and pressures the target to move savings, buy cryptocurrency or gold, or hand over cash for supposed protection.",
+    "platform": "phone / messaging",
+    "claimedIdentity": "government agent or organization representative",
+    "requestedActions": [
+      "transfer money to a supposedly secure account",
+      "buy cryptocurrency, gold, or withdraw cash"
+    ],
+    "signalIds": [
+      "claimed_authority_or_institution",
+      "authority_pressure",
+      "fear_or_threat",
+      "urgency_pressure",
+      "request_money_or_transfer"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "Did someone tell you to move or transfer your money? It could be a scam",
+      "url": "https://consumer.ftc.gov/consumer-alerts/2024/01/did-someone-tell-you-move-or-transfer-your-money-it-could-be-scam",
+      "publishedDate": "2024-01-19"
+    },
+    "notes": "FTC warning about institution impostors directing victims to move assets."
+  },
+  {
+    "id": "ftc-selling-online-2022",
+    "scamTypeId": "marketplace",
+    "title": "Fake marketplace buyer uses payment and verification tricks",
+    "shortParaphrase": "A fake buyer insists on a mobile payment method, sends a false payment notice, claims an overpayment, or asks for a verification code supposedly to confirm the seller is real. The seller may be pushed to refund money or disclose the code.",
+    "platform": "online marketplace / payment app",
+    "claimedIdentity": "marketplace buyer",
+    "requestedActions": [
+      "send money back after a claimed payment",
+      "share a verification code"
+    ],
+    "signalIds": [
+      "claimed_seller_or_buyer",
+      "off_platform_payment_request",
+      "request_money_or_transfer",
+      "request_otp_or_security_code"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "Selling stuff online? Here’s how to avoid a scam",
+      "url": "https://consumer.ftc.gov/consumer-alerts/2022/07/selling-stuff-online-heres-how-avoid-scam",
+      "publishedDate": "2022-07-27"
+    },
+    "notes": "FTC warning covering fake buyer payments, overpayments, and verification-code requests."
+  },
+  {
+    "id": "ftc-buying-marketplace",
+    "scamTypeId": "marketplace",
+    "title": "Marketplace seller asks a buyer to pay outside platform protections",
+    "shortParaphrase": "A seller asks a marketplace buyer to use a wire transfer, gift card, cryptocurrency, or another payment method outside the marketplace's system, making it difficult to dispute the transaction or recover the money.",
+    "platform": "online marketplace",
+    "claimedIdentity": "marketplace seller",
+    "requestedActions": [
+      "send payment outside the marketplace"
+    ],
+    "signalIds": [
+      "claimed_seller_or_buyer",
+      "off_platform_payment_request",
+      "request_money_or_transfer"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "Buying From an Online Marketplace",
+      "url": "https://consumer.ftc.gov/articles/buying-online-marketplace",
+      "publishedDate": null
+    },
+    "notes": "The evergreen FTC article displays a month and year, so no precise day is stored."
+  },
+  {
+    "id": "ftc-tech-support-popup",
+    "scamTypeId": "tech_support",
+    "title": "Fake security pop-up warns of a device infection",
+    "shortParaphrase": "A bogus pop-up or message claims a computer has a serious security problem or virus and creates pressure to contact a supposed technical-support service using the displayed number.",
+    "platform": "web pop-up / email / text",
+    "claimedIdentity": "technical support provider",
+    "requestedActions": [
+      "call the displayed support number"
+    ],
+    "signalIds": [
+      "claimed_tech_support",
+      "device_infection_claim",
+      "fear_or_threat",
+      "urgency_pressure"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "How To Spot, Avoid, and Report Tech Support Scams",
+      "url": "https://consumer.ftc.gov/articles/how-spot-avoid-and-report-tech-support-scams",
+      "publishedDate": null
+    },
+    "notes": "Fake-warning variant documented by the FTC; the evergreen page exposes no reliably verified full date."
+  },
+  {
+    "id": "ftc-tech-support-remote-access",
+    "scamTypeId": "tech_support",
+    "title": "Fake technician seeks remote access and payment",
+    "shortParaphrase": "A supposed technician claims to find viruses or hacked accounts, asks for remote access to the target's computer, and then demands payment or directs the target to move money using methods that are difficult to reverse.",
+    "platform": "phone / remote-access software",
+    "claimedIdentity": "technical support representative",
+    "requestedActions": [
+      "grant remote access to the computer",
+      "pay for supposed support or move money"
+    ],
+    "signalIds": [
+      "claimed_tech_support",
+      "device_infection_claim",
+      "fear_or_threat",
+      "request_remote_access",
+      "request_money_or_transfer"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "How To Spot, Avoid, and Report Tech Support Scams",
+      "url": "https://consumer.ftc.gov/articles/how-spot-avoid-and-report-tech-support-scams",
+      "publishedDate": null
+    },
+    "notes": "Remote-access and payment variant documented by the same FTC source."
+  },
+  {
+    "id": "fbi-business-email-compromise-2024",
+    "scamTypeId": "professional_targeted",
+    "title": "Compromised business email redirects a legitimate funds transfer",
+    "shortParaphrase": "A criminal compromises a legitimate business or personal email account through social engineering or intrusion and uses the trusted professional workflow to direct an unauthorized transfer of funds.",
+    "platform": "business email",
+    "claimedIdentity": "trusted business contact",
+    "requestedActions": [
+      "complete a fraudulent transfer of funds"
+    ],
+    "signalIds": [
+      "professional_workflow_or_invoice_request",
+      "request_money_or_transfer"
+    ],
+    "source": {
+      "organizationOrPublisher": "Federal Bureau of Investigation, Internet Crime Complaint Center",
+      "title": "Business Email Compromise: The $55 Billion Scam",
+      "url": "https://www.ic3.gov/PSA/2024/PSA240911",
+      "publishedDate": "2024-09-11"
+    },
+    "notes": "FBI IC3 public service announcement about business email compromise and fraudulent transfers."
+  },
+  {
+    "id": "github-tech-worker-campaign-2023",
+    "scamTypeId": "professional_targeted",
+    "title": "Fake recruiter or developer collaboration delivers malicious code",
+    "shortParaphrase": "A threat actor approaches a technology worker using a fake or compromised recruiter or developer identity, may move the conversation across professional or messaging platforms, and invites collaboration on a repository containing malicious npm dependencies or sends software to run.",
+    "platform": "GitHub / LinkedIn / Slack / Telegram",
+    "claimedIdentity": "recruiter or developer",
+    "requestedActions": [
+      "move the professional conversation to another platform",
+      "clone and execute a repository or install software"
+    ],
+    "signalIds": [
+      "claimed_recruiter_or_employer",
+      "professional_workflow_or_invoice_request",
+      "request_move_to_other_platform",
+      "request_download_or_install"
+    ],
+    "source": {
+      "organizationOrPublisher": "GitHub Security",
+      "title": "Security alert: social engineering campaign targets technology industry employees",
+      "url": "https://github.blog/security/vulnerability-research/security-alert-social-engineering-campaign-targets-technology-industry-employees/",
+      "publishedDate": "2023-07-18"
+    },
+    "notes": "GitHub Security account of a campaign using professional collaboration to deliver malicious software."
+  },
+  {
+    "id": "ftc-phishing-attachment-2025",
+    "scamTypeId": "malicious_attachment",
+    "title": "Trusted-company phishing email uses an invoice attachment lure",
+    "shortParaphrase": "An unexpected email impersonates a familiar bank, utility, or other company and claims there is an overdue invoice or account problem. It asks the recipient to open an attachment or click a link, exposing them to malware or information theft.",
+    "platform": "email",
+    "claimedIdentity": "trusted company",
+    "requestedActions": [
+      "open an unexpected attachment",
+      "click a supplied link"
+    ],
+    "signalIds": [
+      "ordinary_looking_attachment_used_as_lure",
+      "request_download_or_install",
+      "professional_workflow_or_invoice_request",
+      "claimed_authority_or_institution"
+    ],
+    "source": {
+      "organizationOrPublisher": "U.S. Federal Trade Commission",
+      "title": "Protect yourself from phishing scams",
+      "url": "https://consumer.ftc.gov/consumer-alerts/2025/04/protect-yourself-phishing-scams",
+      "publishedDate": "2025-06-04"
+    },
+    "notes": "FTC warning about unexpected invoice-themed phishing links and attachments."
+  },
+  {
+    "id": "cisa-dyre-attachment-2014",
+    "scamTypeId": "malicious_attachment",
+    "title": "Invoice-named PDF attachment delivers banking malware",
+    "shortParaphrase": "A phishing email uses an ordinary invoice-named PDF as the lure. Opening the weaponized attachment can download Dyre banking malware, turning a routine business document into the path to infection.",
+    "platform": "email",
+    "claimedIdentity": "invoice sender",
+    "requestedActions": [
+      "open the invoice PDF attachment"
+    ],
+    "signalIds": [
+      "ordinary_looking_attachment_used_as_lure",
+      "request_download_or_install",
+      "professional_workflow_or_invoice_request"
+    ],
+    "source": {
+      "organizationOrPublisher": "Cybersecurity and Infrastructure Security Agency",
+      "title": "Phishing Campaign Linked with “Dyre” Banking Malware",
+      "url": "https://www.cisa.gov/news-events/alerts/2014/10/27/phishing-campaign-linked-dyre-banking-malware",
+      "publishedDate": "2014-10-27"
+    },
+    "notes": "CISA-hosted US-CERT alert, originally published October 27, 2014 and revised September 30, 2016."
   }
 ]

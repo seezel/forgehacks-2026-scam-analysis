@@ -137,10 +137,15 @@ describe("buildAnalysisResult", () => {
     const extracted = extraction([
       "unexpected_contact",
       "request_deposit_or_fee",
+      "small_initial_payout",
     ]);
     extracted.claimedIdentity = "game developer";
+    const jobTaskProfile = profiles.find(
+      (profile) => profile.id === "job_task",
+    );
+    expect(jobTaskProfile).toBeDefined();
     const related = rankRelatedExamples(
-      profiles[0],
+      jobTaskProfile!,
       loadExamples(),
       extracted,
     );

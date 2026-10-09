@@ -86,7 +86,13 @@ describe("POST /api/analyze", () => {
       name: "Job / task scam",
     });
     expect(result.immediateActions.length).toBeGreaterThan(0);
-    expect(result.relatedExamples).toHaveLength(1);
+    expect(result.relatedExamples).toHaveLength(2);
+    expect(result.relatedExamples.map((example: { exampleId: string }) => example.exampleId)).toEqual(
+      expect.arrayContaining([
+        "ftc-task-scam-2025",
+        "fbi-work-from-home-2024",
+      ]),
+    );
   });
 
   it("returns insufficient evidence without exposing a likely type or examples", async () => {
