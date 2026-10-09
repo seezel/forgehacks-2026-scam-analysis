@@ -1,0 +1,429 @@
+{
+  "setup": {
+    "date": "2026-10-09",
+    "model": "qwen/qwen3.8-27b",
+    "caseCount": 16,
+    "scamCases": 8,
+    "benignCases": 4,
+    "ambiguousCases": 4
+  },
+  "hybrid": {
+    "metrics": {
+      "exactScamTypeCorrect": 6,
+      "scamNonAbstention": 6,
+      "nonScamAbstention": 8,
+      "overallCorrect": 14,
+      "providerFailures": 0
+    },
+    "unsupportedObservationsRemovedByGrounding": 0,
+    "casesWithGroundingRemovals": 0,
+    "cases": [
+      {
+        "id": "scam-compromised-friend",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 4,
+        "groundedPresentSignalCount": 4,
+        "groundingDroppedObservations": 0,
+        "status": "possible_match",
+        "topScamTypeId": "compromised_friend",
+        "expectedScamTypeId": "compromised_friend",
+        "expectedBehavior": "non-abstain_correct_type",
+        "pass": true
+      },
+      {
+        "id": "scam-job-task",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 5,
+        "groundedPresentSignalCount": 5,
+        "groundingDroppedObservations": 0,
+        "status": "possible_match",
+        "topScamTypeId": "job_task",
+        "expectedScamTypeId": "job_task",
+        "expectedBehavior": "non-abstain_correct_type",
+        "pass": true
+      },
+      {
+        "id": "scam-relationship-investment",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 5,
+        "groundedPresentSignalCount": 5,
+        "groundingDroppedObservations": 0,
+        "status": "possible_match",
+        "topScamTypeId": "relationship_investment",
+        "expectedScamTypeId": "relationship_investment",
+        "expectedBehavior": "non-abstain_correct_type",
+        "pass": true
+      },
+      {
+        "id": "scam-institution-impersonation",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 7,
+        "groundedPresentSignalCount": 7,
+        "groundingDroppedObservations": 0,
+        "status": "strong_match",
+        "topScamTypeId": "institution_impersonation",
+        "expectedScamTypeId": "institution_impersonation",
+        "expectedBehavior": "non-abstain_correct_type",
+        "pass": true
+      },
+      {
+        "id": "scam-marketplace",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 6,
+        "groundedPresentSignalCount": 6,
+        "groundingDroppedObservations": 0,
+        "status": "strong_match",
+        "topScamTypeId": "marketplace",
+        "expectedScamTypeId": "marketplace",
+        "expectedBehavior": "non-abstain_correct_type",
+        "pass": true
+      },
+      {
+        "id": "scam-tech-support",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 6,
+        "groundedPresentSignalCount": 6,
+        "groundingDroppedObservations": 0,
+        "status": "strong_match",
+        "topScamTypeId": "tech_support",
+        "expectedScamTypeId": "tech_support",
+        "expectedBehavior": "non-abstain_correct_type",
+        "pass": true
+      },
+      {
+        "id": "scam-professional-targeted",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 0,
+        "groundedPresentSignalCount": 0,
+        "groundingDroppedObservations": 0,
+        "status": "insufficient_evidence",
+        "topScamTypeId": "compromised_friend",
+        "expectedScamTypeId": "professional_targeted",
+        "expectedBehavior": "non-abstain_correct_type",
+        "pass": false
+      },
+      {
+        "id": "scam-malicious-attachment",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 0,
+        "groundedPresentSignalCount": 0,
+        "groundingDroppedObservations": 0,
+        "status": "insufficient_evidence",
+        "topScamTypeId": "compromised_friend",
+        "expectedScamTypeId": "malicious_attachment",
+        "expectedBehavior": "non-abstain_correct_type",
+        "pass": false
+      },
+      {
+        "id": "benign-dinner-plans",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 0,
+        "groundedPresentSignalCount": 0,
+        "groundingDroppedObservations": 0,
+        "status": "insufficient_evidence",
+        "topScamTypeId": "compromised_friend",
+        "expectedScamTypeId": null,
+        "expectedBehavior": "abstain",
+        "pass": true
+      },
+      {
+        "id": "benign-interview-scheduling",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 2,
+        "groundedPresentSignalCount": 2,
+        "groundingDroppedObservations": 0,
+        "status": "insufficient_evidence",
+        "topScamTypeId": "professional_targeted",
+        "expectedScamTypeId": null,
+        "expectedBehavior": "abstain",
+        "pass": true
+      },
+      {
+        "id": "benign-bank-statement",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 0,
+        "groundedPresentSignalCount": 0,
+        "groundingDroppedObservations": 0,
+        "status": "insufficient_evidence",
+        "topScamTypeId": "compromised_friend",
+        "expectedScamTypeId": null,
+        "expectedBehavior": "abstain",
+        "pass": true
+      },
+      {
+        "id": "benign-marketplace-pickup",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 0,
+        "groundedPresentSignalCount": 0,
+        "groundingDroppedObservations": 0,
+        "status": "insufficient_evidence",
+        "topScamTypeId": "compromised_friend",
+        "expectedScamTypeId": null,
+        "expectedBehavior": "abstain",
+        "pass": true
+      },
+      {
+        "id": "ambiguous-invoice-review",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 0,
+        "groundedPresentSignalCount": 0,
+        "groundingDroppedObservations": 0,
+        "status": "insufficient_evidence",
+        "topScamTypeId": "compromised_friend",
+        "expectedScamTypeId": null,
+        "expectedBehavior": "abstain",
+        "pass": true
+      },
+      {
+        "id": "ambiguous-account-support",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 0,
+        "groundedPresentSignalCount": 0,
+        "groundingDroppedObservations": 0,
+        "status": "insufficient_evidence",
+        "topScamTypeId": "compromised_friend",
+        "expectedScamTypeId": null,
+        "expectedBehavior": "abstain",
+        "pass": true
+      },
+      {
+        "id": "ambiguous-crypto-interest",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 0,
+        "groundedPresentSignalCount": 0,
+        "groundingDroppedObservations": 0,
+        "status": "insufficient_evidence",
+        "topScamTypeId": "compromised_friend",
+        "expectedScamTypeId": null,
+        "expectedBehavior": "abstain",
+        "pass": true
+      },
+      {
+        "id": "ambiguous-recruiter-interest",
+        "rawExtractionSuccess": true,
+        "rawPresentSignalCount": 0,
+        "groundedPresentSignalCount": 0,
+        "groundingDroppedObservations": 0,
+        "status": "insufficient_evidence",
+        "topScamTypeId": "compromised_friend",
+        "expectedScamTypeId": null,
+        "expectedBehavior": "abstain",
+        "pass": true
+      }
+    ]
+  },
+  "rulesOnly": {
+    "metrics": {
+      "exactScamTypeCorrect": 8,
+      "scamNonAbstention": 8,
+      "nonScamAbstention": 8,
+      "overallCorrect": 16,
+      "providerFailures": 0
+    },
+    "cases": [
+      {
+        "id": "scam-compromised-friend",
+        "predictedScamTypeId": "compromised_friend",
+        "abstain": false,
+        "pass": true
+      },
+      {
+        "id": "scam-job-task",
+        "predictedScamTypeId": "job_task",
+        "abstain": false,
+        "pass": true
+      },
+      {
+        "id": "scam-relationship-investment",
+        "predictedScamTypeId": "relationship_investment",
+        "abstain": false,
+        "pass": true
+      },
+      {
+        "id": "scam-institution-impersonation",
+        "predictedScamTypeId": "institution_impersonation",
+        "abstain": false,
+        "pass": true
+      },
+      {
+        "id": "scam-marketplace",
+        "predictedScamTypeId": "marketplace",
+        "abstain": false,
+        "pass": true
+      },
+      {
+        "id": "scam-tech-support",
+        "predictedScamTypeId": "tech_support",
+        "abstain": false,
+        "pass": true
+      },
+      {
+        "id": "scam-professional-targeted",
+        "predictedScamTypeId": "professional_targeted",
+        "abstain": false,
+        "pass": true
+      },
+      {
+        "id": "scam-malicious-attachment",
+        "predictedScamTypeId": "malicious_attachment",
+        "abstain": false,
+        "pass": true
+      },
+      {
+        "id": "benign-dinner-plans",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "benign-interview-scheduling",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "benign-bank-statement",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "benign-marketplace-pickup",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "ambiguous-invoice-review",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "ambiguous-account-support",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "ambiguous-crypto-interest",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "ambiguous-recruiter-interest",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      }
+    ]
+  },
+  "directLlm": {
+    "metrics": {
+      "exactScamTypeCorrect": 1,
+      "scamNonAbstention": 1,
+      "nonScamAbstention": 8,
+      "overallCorrect": 9,
+      "providerFailures": 0
+    },
+    "cases": [
+      {
+        "id": "scam-compromised-friend",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": false
+      },
+      {
+        "id": "scam-job-task",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": false
+      },
+      {
+        "id": "scam-relationship-investment",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": false
+      },
+      {
+        "id": "scam-institution-impersonation",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": false
+      },
+      {
+        "id": "scam-marketplace",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": false
+      },
+      {
+        "id": "scam-tech-support",
+        "predictedScamTypeId": "tech_support",
+        "abstain": false,
+        "pass": true
+      },
+      {
+        "id": "scam-professional-targeted",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": false
+      },
+      {
+        "id": "scam-malicious-attachment",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": false
+      },
+      {
+        "id": "benign-dinner-plans",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "benign-interview-scheduling",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "benign-bank-statement",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "benign-marketplace-pickup",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "ambiguous-invoice-review",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "ambiguous-account-support",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "ambiguous-crypto-interest",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      },
+      {
+        "id": "ambiguous-recruiter-interest",
+        "predictedScamTypeId": null,
+        "abstain": true,
+        "pass": true
+      }
+    ]
+  }
+}
