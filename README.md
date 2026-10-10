@@ -2,7 +2,7 @@
 
 An AI-assisted scam analysis tool that extracts structured warning signs from messages, screenshots, and links, then compares them with known scam patterns and documented examples.
 
-- Live demo: `LIVE_DEMO_URL_HERE`
+- Live demo: `https://forgehacks-2026-scam-analysis-pzyn.vercel.app/`
 - Source: [GitHub repository](https://github.com/seezel/forgehacks-2026-scam-analysis)
 
 ## What it does
