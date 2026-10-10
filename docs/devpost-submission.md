@@ -91,5 +91,5 @@ This is a small synthetic hackathon evaluation, not a production benchmark.
 - [ ] Public 2 to 4 minute demo video URL inserted: `DEMO_VIDEO_URL_HERE`
 - [ ] Screenshots uploaded
 - [ ] Submission text proofread
-- [ ] Correct track selected: AI + Cybersecurity
+- [x] Correct track selected: AI + Cybersecurity
 - [ ] Final submission submitted before the deadline

@@ -10,10 +10,6 @@ export default function Home() {
           Analyze suspicious content against structured warning signs and
           documented scam patterns.
         </p>
-        <p className="uncertainty-note">
-          The tool does not mark content as &ldquo;safe.&rdquo; Low evidence
-          means the result is uncertain.
-        </p>
       </header>
 
       <AnalysisForm />

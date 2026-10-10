@@ -152,4 +152,4 @@ The current verified suite contains 122 passing tests across 14 files. It covers
 
 - ForgeHacks 2026
 - Track: AI + Cybersecurity
-- Solo project
+- Team project
